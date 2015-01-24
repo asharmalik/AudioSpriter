@@ -1,7 +1,7 @@
 __author__ = 'Ashar Malik'
 
 from pydub import AudioSegment
-import os
+import os, math
 
 def get_sound_files():
     from os import walk
@@ -22,17 +22,20 @@ def create_sound_sprite(filetype='ogg', gen_code=False):
     sounds = []
     code = "var sound = new Howl({\n\turls: ['"+export_name+"'],\n\tsprite: {\n"
     current_time = 0
+    padding = AudioSegment.from_wav(os.getcwd()+'\\padding.wav')
 
     for file in files:
         if str(file).__contains__('.'+filetype): #filter to only the filetype requested
             file_name = file.split("\\").pop().split(".")[0]
 
             sounds.append(AudioSegment.from_ogg(current_dir+file))
-            duration_ms = sounds[sounds.__len__()-1].duration_seconds*1000
+            sounds.append(padding)
+            duration_ms = math.ceil(sounds[-2].duration_seconds*1000)
 
-            code+="\t\t"+file_name+": ["+str(current_time)+", "+str(duration_ms)+"]"
+            code+="\t\t"+file_name+": ["+str(math.floor(current_time)).split(".")[0]+", "+str(duration_ms).split(".")[0]+"]"
             code+= ("," if files.index(file)<files.__len__()-1 else "") + "\n"
-            current_time+=duration_ms
+
+            current_time+=duration_ms+padding.duration_seconds*1000
 
     code+="\t}\n});"
 
@@ -58,5 +61,3 @@ def create_sound_sprite(filetype='ogg', gen_code=False):
 
 
 create_sound_sprite("ogg", True)
-
-#ogg_version = AudioSegment.from_ogg("C:\Users\Ashar Malik\Dropbox\Coding\Python\AudioSpriter\sounds\Boss_apfelsaft.ogg")
