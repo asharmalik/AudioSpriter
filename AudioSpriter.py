@@ -48,16 +48,15 @@ def create_sound_sprite(filetype='ogg', gen_code=False):
     for sound in sounds:
         spritesheet = spritesheet + sound
 
-    spritesheet.export("spritesheet\\"+export_name)
+    export_dir = "bin\\"
+
+    spritesheet.export(export_dir+export_name)
 
     if gen_code:
-        file = open("spritesheet\\sound.js", "w")
+        file = open(export_dir+"sound.js", "w")
         file.write(code)
         file.close()
-        print("Generated spritesheet\\sound.js")
+        print("Generated "+export_dir+"sound.js")
 
-    print("Generated "+"spritesheet\\"+export_name)
+    print("Generated "+export_dir+export_name)
 
-
-
-create_sound_sprite("ogg", True)
