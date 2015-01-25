@@ -18,3 +18,5 @@ The function will generate the concatenated sound file (and optional howler.js c
 ```
 create_sound_sprite(filetype='ogg', gen_code=False)
 ```
+
+Setting the filetype filters the sounds so only the files in ths specified format are processed.
