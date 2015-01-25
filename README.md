@@ -7,7 +7,6 @@ Requires ffmpeg. [Click here to install for Windows](http://www.wikihow.com/Inst
 Place separate sounds files into the 'sounds' directory.
 
 ```
-
 from AudioSpriter import create_sound_sprite
 
 create_sound_sprite("ogg")
