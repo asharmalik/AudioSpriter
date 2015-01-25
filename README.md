@@ -8,6 +8,6 @@ Place separate sounds files into the sound directory.
 
 ```
 create_sound_sprite(filetype='ogg', gen_code=False)
-'''
+```
 
-The function will generate the finished sound file (and optional howler.js code) to the bin directory.
+The function will generate the concatenated  sound file (and optional howler.js code) to the bin directory.
