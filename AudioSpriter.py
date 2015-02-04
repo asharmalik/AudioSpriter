@@ -14,13 +14,25 @@ def get_sound_files():
 
     return f
 
-def create_sound_sprite(filetype='ogg', gen_code=False):
+#Concatenate all .ogg files in the sounds folder into two spritesheets: mp3 and ogg
+#create_sound_sprite('ogg', True, ['ogg', 'mp3'])
+def create_sound_sprite(filetype='ogg', gen_code=False, pref_output=None):
+    output_name = "spritesheet"
     files = get_sound_files()
     current_dir = os.getcwd()+"\\sounds\\"
-    export_name = "spritesheet"+"."+filetype
+
+    if pref_output is None:
+        pref_output = [filetype]
+
+    output_names = []
+
+    for type in pref_output:
+        output_names.append(output_name+"."+type)
+
 
     sounds = []
-    code = "var sound = new Howl({\n\turls: ['"+export_name+"'],\n\tsprite: {\n"
+    code = "var sound = new Howl({\n\turls: "+output_names.__str__()+",\n\tsprite: {\n"
+
     current_time = 0
     padding = AudioSegment.from_wav(os.getcwd()+'\\padding.wav')
 
@@ -50,13 +62,12 @@ def create_sound_sprite(filetype='ogg', gen_code=False):
 
     export_dir = "bin\\"
 
-    spritesheet.export(export_dir+export_name)
+    for files in output_names:
+        spritesheet.export(export_dir+files)
+        print("Generated "+export_dir+files)
 
     if gen_code:
         file = open(export_dir+"sound.js", "w")
         file.write(code)
         file.close()
         print("Generated "+export_dir+"sound.js")
-
-    print("Generated "+export_dir+export_name)
-
